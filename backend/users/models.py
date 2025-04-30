@@ -16,4 +16,4 @@ class Learner(models.Model):
     mobile_number = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
     qualification = models.CharField(max_length=255)
-    intrested_categories = models.ManyToManyField('courses.CourseCategory')
+    interested_categories = models.ManyToManyField('courses.CourseCategory')

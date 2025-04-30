@@ -1,16 +1,26 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from users.serializers import InstructorSerializer, LearnerSerializer
 from .models import Instructor, Learner
-class InstructorView(APIView):
-    def get(self, request):
-        instructor=Instructor.objects.all()
-        serializer=InstructorSerializer(instructor, many=True)
-        return Response(serializer.data)
+from rest_framework import permissions
+
+class InstructorList(generics.ListCreateAPIView):
+    queryset = Instructor.objects.all()
+    serializer_class = InstructorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class InstructorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Instructor.objects.all()
+    serializer_class = InstructorSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
-class LearnerView(APIView):
-    def get(self, request):
-        learner=Learner.objects.all()
-        serializer=LearnerSerializer(learner, many=True)        
-        return Response(serializer.data)    
+class LearnerList(generics.ListCreateAPIView):
+    queryset = Learner.objects.all()
+    serializer_class = LearnerSerializer  
+    permission_classes = [permissions.IsAuthenticated]
+
+class LearnerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Learner.objects.all()
+    serializer_class = LearnerSerializer
+    permission_classes = [permissions.IsAuthenticated]
